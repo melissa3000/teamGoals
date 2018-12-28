@@ -1,10 +1,6 @@
 const express = require('express');
-// const keys = require('./config/keys');
-// const mysql = require('mysql');
 require('./services/passport');
 require('./dbconnection');
-// require('./models/User');
-
 
 const app = express();
 
