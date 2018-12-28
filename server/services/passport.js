@@ -12,7 +12,9 @@ passport.use(
 			callbackURL: '/auth/google/callback'
 		}, 
 		(accessToken, refreshToken, profile, done) => {
-			db.createUser(profile.id);
+			// console.log(profile.id);
+			db.userExists(profile.id)
+			// db.createUser(profile.id);
 		}
 	)
 );
