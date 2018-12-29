@@ -2,6 +2,7 @@ const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const keys = require('../config/keys');
 const db = require('../dbconnection');
+const uuidv4 = require('uuid/v4');
 
 
 // TODO: fix return done lines - they aren't working properly
@@ -27,9 +28,16 @@ passport.use(
 					console.log('Adding new user')
 					let newUserMysql = new Object();
 					newUserMysql.googleId = profile.id;
-					let user_details = { googleId: profile.id }
+					console.log(newUserMysql)
+					
+					let user_details = { id: uuidv4(), googleId: profile.id }
+					console.log(user_details)
 					db.con.query('INSERT INTO users SET ?', user_details, (err, res) => {
-						console.log('new user added')
+						if (err) {
+							console.log('Error adding user: ', err.message);
+						} else {
+							console.log('new user added');
+						}
 					})
 					// return done(null, newUserMysql);
 				} else {
