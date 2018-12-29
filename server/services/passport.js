@@ -15,7 +15,7 @@ passport.use(
 			callbackURL: '/auth/google/callback'
 		}, 
 		(accessToken, refreshToken, profile, done) => {
-			// console.log(profile.id);
+			console.log(profile.id);
 			db.con.query("SELECT * FROM users WHERE googleId='"+profile.id+"'", function(err, rows) {
 				// console.log(rows);
 				// console.log(rows[0]);
