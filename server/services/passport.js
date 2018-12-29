@@ -4,8 +4,17 @@ const keys = require('../config/keys');
 const db = require('../dbconnection');
 const uuidv4 = require('uuid/v4');
 
+passport.serializeUser((user, done) => {
+	done(null, user.id);
+});
 
-// TODO: fix return done lines - they aren't working properly
+passport.deserializeUser((id, done) => {
+	User.findById(id)
+		.then(user => {
+			done(null, user);
+		});
+});
+
 
 // Create a new instance of the google passport strategy and point passport to it to enable google oAuth
 passport.use(
@@ -18,9 +27,6 @@ passport.use(
 		(accessToken, refreshToken, profile, done) => {
 			console.log(profile.id);
 			db.con.query("SELECT * FROM users WHERE googleId='"+profile.id+"'", function(err, rows) {
-				// console.log(rows);
-				// console.log(rows[0]);
-				// console.log(rows[0].googleId);
 				if (err) {
 					return done(err);
 				}
@@ -28,7 +34,6 @@ passport.use(
 					console.log('Adding new user')
 					let newUserMysql = new Object();
 					newUserMysql.googleId = profile.id;
-					console.log(newUserMysql)
 					
 					let user_details = { id: uuidv4(), googleId: profile.id }
 					console.log(user_details)
@@ -39,12 +44,11 @@ passport.use(
 							console.log('new user added');
 						}
 					})
-					// return done(null, newUserMysql);
+					done(null, newUserMysql);
 				} else {
 					console.log('user already in database')
 					console.log(rows[0])
-					// This next line isn't working correctly, rows[0] doesn't seem to work
-					// return done(null, rows[0]);
+					done(null, rows[0]);
 				}
 			});
 		}
