@@ -9,10 +9,13 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-	User.findById(id)
-		.then(user => {
-			done(null, user);
-		});
+	db.con.query("SELECT * FROM users WHERE id='"+id+"'", function(err, rows) {
+		if (err) {
+			return done(err);
+		} else {
+			done(null, rows[0]);
+		}
+	});
 });
 
 
@@ -25,7 +28,7 @@ passport.use(
 			callbackURL: '/auth/google/callback'
 		}, 
 		(accessToken, refreshToken, profile, done) => {
-			console.log(profile.id);
+			// console.log(profile.id);
 			db.con.query("SELECT * FROM users WHERE googleId='"+profile.id+"'", function(err, rows) {
 				if (err) {
 					return done(err);
@@ -36,7 +39,6 @@ passport.use(
 					newUserMysql.googleId = profile.id;
 					
 					let user_details = { id: uuidv4(), googleId: profile.id }
-					console.log(user_details)
 					db.con.query('INSERT INTO users SET ?', user_details, (err, res) => {
 						if (err) {
 							console.log('Error adding user: ', err.message);
@@ -47,7 +49,6 @@ passport.use(
 					done(null, newUserMysql);
 				} else {
 					console.log('user already in database')
-					console.log(rows[0])
 					done(null, rows[0]);
 				}
 			});
