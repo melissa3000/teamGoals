@@ -10,7 +10,7 @@ const TeamsNew = () => <h2>TeamsNew</h2>
 
 const App = () => {
 	return (
-		<div>
+		<div className="container">
 			<BrowserRouter>
 				<div>
 					<Header />
