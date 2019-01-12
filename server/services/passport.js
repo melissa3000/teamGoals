@@ -4,11 +4,14 @@ const keys = require('../config/keys');
 const db = require('../dbconnection');
 const uuidv4 = require('uuid/v4');
 
+
 passport.serializeUser((user, done) => {
+	console.log("this is the user in serializuser: ", user);
 	done(null, user.id);
 });
 
 passport.deserializeUser((id, done) => {
+	console.log("this is the id in deserialize user: ", id);
 	db.con.query("SELECT * FROM users WHERE id='"+id+"'", function(err, rows) {
 		if (err) {
 			return done(err);
