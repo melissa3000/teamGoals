@@ -8,13 +8,7 @@ module.exports = (app) => {
 		'/auth/google', 
 		passport.authenticate('google', {
 			scope: ['profile', 'email']
-		}),
-		// if google send token error, redirect to the login page
-		(err, req, res, next) => {
-			if (err.name === 'TokenError') {
-				res.redirect('/auth/google');
-			} 
-		}
+		})
 	);
 
 	// route handler to handle callback from google oauth response.
@@ -24,6 +18,14 @@ module.exports = (app) => {
 		passport.authenticate ('google'),
 		(req, res) => {
 			res.redirect('/goals');
+		},
+		// if google sends token error, redirect to the login page
+		(err, req, res, next) => {
+			console.log('This is the error: ', err);
+			console.log('This is the error name: ', err.name);
+			if (err.name === 'TokenError') {
+				res.redirect('/auth/google');
+			} 
 		}
 	);
 	
