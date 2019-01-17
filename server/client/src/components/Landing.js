@@ -1,4 +1,5 @@
 import React from 'react';
+import 'materialize-css/dist/css/materialize.min.css';
 
 const Landing = () => {
 	return (
@@ -6,7 +7,11 @@ const Landing = () => {
 			<h1>
 				Welcome to Team Goals!
 			</h1>
-			Make some goals for yourself
+			Current Goals:
+			<br />
+			<button className="btn waves-effect waves-light" type="submit" name="action">Make a new goal for yourself
+    <i className="material-icons right"></i>
+  </button>
 		</div>
 	);
 };
