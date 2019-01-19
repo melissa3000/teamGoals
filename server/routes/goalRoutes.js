@@ -6,11 +6,11 @@ const uuidv4 = require('uuid/v4');
 let goal = "This is a hard coded test goal for dev";
 
 module.exports = app => {
-	app.get('/api/add_goal', requireLogin, (req, res) => {
+	app.get('/api/add_goal', requireLogin, async (req, res) => {
 		console.log("This is the userid: ", req.user.id);
 
-	// 	// const { goalId, userId, teamId, goal, markedComplete } = req.body;
 
+		// const { goalId, userId, teamId, goal, markedComplete } = req.body;
 		// const newGoal = {
 		// 	goalId: uuidv4(),
 		// 	userId: req.user.id,
@@ -29,6 +29,7 @@ module.exports = app => {
 				console.log('new goal added');
 			}
 		// res.send(goal);
+		// console.log("this is res: ", res);
 		})
 
 	});

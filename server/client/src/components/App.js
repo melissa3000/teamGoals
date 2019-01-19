@@ -5,8 +5,8 @@ import * as actions from '../actions';
 
 import Header from './Header';
 import Landing from './Landing';
-const Goals = () => <h2>Goals</h2>
-const GoalsNew = () => <h2>GoalsNew</h2>
+import Dashboard from './Dashboard';
+import GoalNew from './GoalNew';
 const Teams = () => <h2>Teams</h2>
 const TeamsNew = () => <h2>TeamsNew</h2>
 
@@ -22,8 +22,8 @@ class App extends Component {
 					<div>
 						<Header />
 						<Route exact path="/" component={Landing} />
-						<Route exact path="/goals" component={Goals} />
-						<Route path="/goals/new" component={GoalsNew} />
+						<Route exact path="/goals" component={Dashboard} />
+						<Route path="/goals/new" render={() => <GoalNew />} />
 						<Route exact path="/teams" component={Teams} />
 						<Route path="/teams/new" component={TeamsNew} />
 					</div>
