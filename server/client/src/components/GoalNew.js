@@ -1,12 +1,16 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import GoalField from './GoalField';
 import TeamDropdown from './TeamDropdown';
+import * as actions from '../actions';
+
 
 import 'react-widgets/dist/css/react-widgets.css'
 
-// ToDo: make teams (currently called colors dynamic)
+
+// ToDo: make teams dynamic (currently called colors) 
 let colors = [ { color: 'Red', value: 'ff0000' },
 { color: 'Green', value: '00ff00' },
 { color: 'Blue', value: '0000ff' } ];
@@ -20,7 +24,7 @@ class GoalNew extends Component {
 					<Field 
 						label="Goal" 
 						type="text"
-						name="goalText" 
+						name="goal" 
 						component={GoalField} 
 					/>
 				</div>
@@ -40,7 +44,7 @@ class GoalNew extends Component {
 	render() {
 		return (
 			<div>
-			<form onSubmit={this.props.handleSubmit(values => console.log(values))}>
+			<form onSubmit={this.props.handleSubmit(values => actions.createGoal(values))}>
 				{this.renderFields()}
 				<Link to="/goals" className="red btn-flat white-text">
 					Cancel
@@ -58,14 +62,29 @@ class GoalNew extends Component {
 function validate(values) {
 	const errors = {};
 
-	if (!values.goalText) {
-		errors.goalText = "Please enter a goal";
+	if (!values.goal) {
+		errors.goal = "Please enter a goal";
 	}
-
 	return errors;
 }
 
-export default reduxForm({
+
+// export default GoalNew = reduxForm({
+// 	validate,
+// 	form: 'goalForm'
+// })(GoalNew);
+
+GoalNew = reduxForm({
 	validate,
 	form: 'goalForm'
 })(GoalNew);
+
+function mapStateToProps(state) {
+	console.log('state: ', state);
+	// console.log('state.form.goalForm: ', state.form.goalForm);
+	// return { formValues: state.form.goalForm.values };
+}
+
+export default connect(mapStateToProps, actions)(GoalNew);
+
+// <form onSubmit={this.props.handleSubmit(values => console.log(values))}>

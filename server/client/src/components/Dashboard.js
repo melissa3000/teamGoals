@@ -9,7 +9,7 @@ const Dashboard = () => {
 			Current Goals:
 			<br />
 			<div>
-				<Link to="/goals/new" className="waves-effect waves-light btn">Make a new goal for yourself
+				<Link to="/goals/new" className="waves-effect waves-light btn">Make a new goal
 				</Link>
 			</div>
 		</div>		
