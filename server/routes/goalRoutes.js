@@ -3,19 +3,21 @@ const requireLogin = require('../middlewares/requireLogin');
 const db = require('../dbconnection');
 const uuidv4 = require('uuid/v4');
 
-let goal = "another goal";
+let goal = "Now another goal";
 
 module.exports = app => {
-	app.get('/api/add_goal', requireLogin, async (req, res) => {
+	app.post('/api/add_goal', requireLogin, async (req, res) => {
 
 		// add teamName to table and teamId to goal_details (must create team before goal that goes into it)
-		
-		let goal_details = { goalId: uuidv4(), userId: req.user.id, goal: goal, markedComplete: false }
+		console.log('req.body.goal: ', req.body.goal);
+		console.log('req.body.teamName.team: ', req.body.teamName);
+
+		let goal_details = { goalId: uuidv4(), userId: req.user.id, goal: req.body.goal, markedComplete: false }
 		let newUserGoal = new Object();
 		newUserGoal.goalId = goal_details.goalId
 
 		console.log('goal_details: ', goal_details);
-		console.log('newusergoal id: ', newUserGoal);
+		console.log('newusergoal: ', newUserGoal);
 
 		db.con.query('INSERT INTO goals SET ?', goal_details, (err, res) => {
 			if (err) {
@@ -28,4 +30,3 @@ module.exports = app => {
 	});
 
 };
-
