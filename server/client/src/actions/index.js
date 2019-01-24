@@ -23,8 +23,10 @@ export const createGoal = values => async dispatch => {
 	dispatch({ type: CREATE_GOAL, payload: res.data });
 };
 
+
+
 export const fetchGoals = () => async dispatch => {
-	const res = await axios.get('/api/add_goal');
+	const res = await axios.get('/api/user_goals');
 
 	dispatch({ type: FETCH_GOALS, payload: res.data });
 };

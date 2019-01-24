@@ -49,28 +49,12 @@ class GoalNew extends Component {
 		);
 	}
 
-	// render() {
-	// 	return (
-	// 		<div>
-	// 		<form onSubmit={this.props.handleSubmit(values => createGoal(values))}>
-	// 			{this.renderFields()}
-	// 			<Link to="/goals" className="red btn-flat white-text">
-	// 				Cancel
-	// 			</Link>
-	// 			<button type="submit" className="teal btn-flat right white-text">
-	// 				Submit
-	// 				<i className="material-icons right">done</i>
-	// 			</button>
-	// 		</form>
-	// 		</div>
-	// 	);
-	// }
-
 	onSubmit(values) {
 		this.props.createGoal(values, () => {
 			this.props.history.push('/goals');
 		});
 	}
+	
 	render() {
 		const { handleSubmit } = this.props;
 		return (
@@ -90,7 +74,7 @@ class GoalNew extends Component {
 
 function validate(values) {
 	const errors = {};
-	
+
 	if (!values.goal) {
 		errors.goal = "Please enter a goal";
 	}
@@ -104,23 +88,3 @@ export default reduxForm({
 }) (
 	connect(null, { createGoal }) (GoalNew)
 );
-
-// export default GoalNew = reduxForm({
-// 	validate,
-// 	form: 'goalForm'
-// })(GoalNew);
-
-// GoalNew = reduxForm({
-// 	validate,
-// 	form: 'goalForm'
-// })(GoalNew);
-
-// function mapStateToProps(state) {
-// 	console.log('state: ', state);
-// 	// console.log('state.form.goalForm: ', state.form.goalForm);
-// 	// return { formValues: state.form.goalForm.values };
-// }
-
-// export default connect(mapStateToProps, actions)(GoalNew);
-
-// <form onSubmit={this.props.handleSubmit(values => console.log(values))}>
