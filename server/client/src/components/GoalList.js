@@ -9,7 +9,6 @@ class GoalList extends Component {
 	}
 	
 	renderGoals() {
-		console.log("props: ", this.props.goals);
 		return this.props.goals.map(goal => {
 			return (
 				<div className="card darken-1" key={goal.goalId}>
