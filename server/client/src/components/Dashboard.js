@@ -13,6 +13,12 @@ const Dashboard = () => {
 				<Link to="/goals/new" className="waves-effect waves-light btn">Make a new goal
 				</Link>
 			</div>
+			<h3>Current Teams:</h3>
+			<br />
+			<div>
+				<Link to="/teams/new" className="waves-effect waves-light btn">Make a new team
+				</Link>
+			</div>
 		</div>		
 	);
 };

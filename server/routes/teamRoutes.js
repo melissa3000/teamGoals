@@ -3,13 +3,9 @@ const db = require('../dbconnection');
 const uuidv4 = require('uuid/v4');
 
 module.exports = app => {
-	app.get('/api/add_team', requireLogin, async (req, res) => {
+	app.post('/api/add_team', requireLogin, async (req, res) => {
 
-		let teamName = "Very first team";
-		let teamInviteToken = "joinUs!"
-		// console.log('req.body.teamName.team: ', req.body.teamName);
-
-		let team_details = { teamId: uuidv4(), teamName: teamName, teamInviteToken: teamInviteToken }
+		let team_details = { teamId: uuidv4(), teamName: req.body.teamName, teamInviteToken: req.body.teamInviteToken }
 		let newTeam = new Object();
 		newTeam.teamId = team_details.teamId
 
@@ -26,8 +22,28 @@ module.exports = app => {
 		res.send(newTeam);
 	});
 
+		app.get('/api/user_teams', (req, res) => {
+		db.con.query("SELECT * FROM teams", (err, rows) => {
+			if (err) {
+					console.log(err);
+			} else {
+				res.send(rows);
+			}
+		})		
+	});
+
 	// app.get('/api/user_teams', (req, res) => {
-	// 	db.con.query("SELECT * FROM users WHERE TeamId='"+req.user.Teamid+"'", (err, rows) => {
+	// 	db.con.query("SELECT * FROM teams WHERE userId='"+req.user.id+"'", (err, rows) => {
+	// 		if (err) {
+	// 				console.log(err);
+	// 		} else {
+	// 			res.send(rows);
+	// 		}
+	// 	})		
+	// });
+
+	// app.get('/api/team_goals', (req, res) => {
+	// 	db.con.query("SELECT * FROM goals WHERE TeamId='d2533c07-9dd6-4633-97b4-38dfe4630eef'", (err, rows) => {
 	// 		if (err) {
 	// 				console.log(err);
 	// 		} else {
@@ -37,3 +53,4 @@ module.exports = app => {
 	// });
 
 };
+
