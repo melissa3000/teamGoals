@@ -25,6 +25,7 @@ app.use(passport.session());
 require('./routes/authRoutes')(app);
 require('./routes/goalRoutes')(app);
 require('./routes/teamRoutes')(app);
+require('./routes/commentRoutes')(app);
 
 // Allow dynamic port binding for deployment to Heroku
 const PORT = process.env.PORT || 5000;

@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_GOALS, CREATE_GOAL, CREATE_TEAM, FETCH_TEAMS } from './types';
+import { FETCH_USER, FETCH_GOALS, CREATE_GOAL, CREATE_TEAM, FETCH_TEAMS, CREATE_COMMENT, FETCH_COMMENTS } from './types';
 
 
 export const fetchUser = () => async dispatch => {
@@ -39,4 +39,16 @@ export const fetchTeams = () => async dispatch => {
 	const res = await axios.get('/api/user_teams');
 
 	dispatch({ type: FETCH_TEAMS, payload: res.data });
+};
+
+export const createComment = values => async dispatch => {
+	const res = await axios.post('/api/add_comment', values);
+
+	dispatch({ type: CREATE_COMMENT, payload: res.data });
+};
+
+export const fetchComments = () => async dispatch => {
+	const res = await axios.get('/api/get_comments');
+
+	dispatch({ type: FETCH_COMMENTS, payload: res.data });
 };

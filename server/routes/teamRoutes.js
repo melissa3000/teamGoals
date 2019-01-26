@@ -14,7 +14,7 @@ module.exports = app => {
 
 		db.con.query('INSERT INTO teams SET ?', team_details, (err, res) => {
 			if (err) {
-				console.log('Error adding tea: ', err.message);
+				console.log('Error adding team: ', err.message);
 			} else {
 				console.log('new team added');
 			}		
