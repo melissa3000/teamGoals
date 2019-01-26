@@ -2,6 +2,7 @@ import React from 'react';
 import DropdownList from 'react-widgets/lib/DropdownList'
 
 
+
 export default ({ input, data, valueField, textField }) => {
 	return (
 		<div>
@@ -13,3 +14,4 @@ export default ({ input, data, valueField, textField }) => {
 		</div>
 	);
 };
+

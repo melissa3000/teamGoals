@@ -5,27 +5,18 @@ import { connect } from 'react-redux';
 import GoalField from './GoalField';
 import TeamDropdown from './TeamDropdown';
 import { createGoal } from '../actions';
-
+import { fetchTeams } from '../actions';
 
 import 'react-widgets/dist/css/react-widgets.css'
 
 
-// ToDo: make teams dynamic (currently called colors) 
-let colors = [ { name: 'team 1' },
-{ name: 'team 2' },
-{ name: 'team 3' } ];
-
-// should I add teamId to this as the value field?
-// { color: 'Blue', value: 'team 3' } 
-
-// name="teamName" 
-// component={TeamDropdown}
-// data={colors}
-// valueField="value"
-// textField="color" 
-
 class GoalNew extends Component {
+	componentDidMount() {
+		this.props.fetchTeams();
+	}
+	
 	renderFields() {
+		let teams = this.props.teams;
 		return (
 			<div>
 				<div>
@@ -41,9 +32,9 @@ class GoalNew extends Component {
 					<Field 
 						name="teamName" 
 						component={TeamDropdown}
-						data={colors}
-						valueField="name"
-						textField="name" />
+						data={teams}
+						valueField="teamID"
+						textField="teamName" />
 				</div>
 			</div>
 		);
@@ -54,7 +45,7 @@ class GoalNew extends Component {
 			this.props.history.push('/goals');
 		});
 	}
-	
+
 	render() {
 		const { handleSubmit } = this.props;
 		return (
@@ -81,10 +72,15 @@ function validate(values) {
 	return errors;
 }
 
+function mapStateToProps( { teams }) {
+	return { teams };
+}
 
 export default reduxForm({
 	validate,
 	form: 'goalForm'
 }) (
-	connect(null, { createGoal }) (GoalNew)
+	connect(mapStateToProps, { createGoal, fetchTeams}) (GoalNew)
 );
+
+
