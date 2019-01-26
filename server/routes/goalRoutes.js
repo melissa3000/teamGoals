@@ -6,15 +6,12 @@ const uuidv4 = require('uuid/v4');
 module.exports = app => {
 	app.post('/api/add_goal', requireLogin, async (req, res) => {
 
-		// add teamName to table and teamId to goal_details (must create team before goal that goes into it)
-		console.log('req.body.teamName.team: ', req.body.teamName);
-
-		let goal_details = { goalId: uuidv4(), userId: req.user.id, goal: req.body.goal, markedComplete: false }
+		let goal_details = { goalId: uuidv4(), userId: req.user.id, goal: req.body.goal, TeamId: req.body.teamName.teamID, markedComplete: false }
 		let newUserGoal = new Object();
 		newUserGoal.goalId = goal_details.goalId
 
-		console.log('goal_details: ', goal_details);
-		console.log('newusergoal: ', newUserGoal);
+		// console.log('goal_details: ', goal_details);
+		// console.log('newusergoal: ', newUserGoal);
 
 		db.con.query('INSERT INTO goals SET ?', goal_details, (err, res) => {
 			if (err) {
