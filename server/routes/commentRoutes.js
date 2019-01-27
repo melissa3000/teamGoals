@@ -26,8 +26,11 @@ module.exports = app => {
 		res.send(newComment);
 	});
 
-		app.get('/api/get_comments', (req, res) => {
-		db.con.query("SELECT * FROM comments", (err, rows) => {
+	app.get('/api/get_comments', (req, res) => {
+		console.log("req.user", req.user);
+		console.log("request body: ", req.body);
+		console.log("request body goal: ", req.body.goal)
+		db.con.query("SELECT * FROM comments WHERE goalId='"+goalId+"'", (err, rows) => {
 			if (err) {
 					console.log(err);
 			} else {

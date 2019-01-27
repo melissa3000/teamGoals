@@ -47,8 +47,8 @@ export const createComment = values => async dispatch => {
 	dispatch({ type: CREATE_COMMENT, payload: res.data });
 };
 
-export const fetchComments = () => async dispatch => {
-	const res = await axios.get('/api/get_comments');
+export const fetchComments = values => async dispatch => {
+	const res = await axios.get('/api/get_comments', values);
 
 	dispatch({ type: FETCH_COMMENTS, payload: res.data });
 };
