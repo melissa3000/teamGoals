@@ -26,14 +26,18 @@ module.exports = app => {
 		res.send(newComment);
 	});
 
-	app.get('/api/get_comments', (req, res) => {
-		console.log("req.user", req.user);
-		console.log("request body: ", req.body);
-		console.log("request body goal: ", req.body.goal)
-		db.con.query("SELECT * FROM comments WHERE goalId='"+goalId+"'", (err, rows) => {
+	// Why can't I get the goalId into this get request to do a WHERE goalID="blah"?
+	app.get('/api/get_comments', requireLogin, async (req, res) => {
+		// console.log("req.user", req.user);
+		// console.log("req: ", req);
+		// console.log("request body: ", req.body);
+		// console.log("request goal:", req.goal);
+		// console.log("request body goal: ", req.body.goal)
+		db.con.query("SELECT * FROM comments", (err, rows) => {
 			if (err) {
 					console.log(err);
 			} else {
+				// console.log("ROWS: ", rows);
 				res.send(rows);
 			}
 		})		
