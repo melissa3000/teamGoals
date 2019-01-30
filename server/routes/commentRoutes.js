@@ -2,12 +2,14 @@ const requireLogin = require('../middlewares/requireLogin');
 const db = require('../dbconnection');
 const uuidv4 = require('uuid/v4');
 
-let comment = "Test comment";
-// let goalId = "783aaf02-86e5-478e-9abc-40d9ec67e384";
+let comment = "Doing great!";
+let goalId = "783aaf02-86e5-478e-9abc-40d9ec67e384";
 
 
 module.exports = app => {
 	app.get('/api/add_comment', requireLogin, async (req, res) => {
+		let comment = "Doing great!";
+let goalId = "783aaf02-86e5-478e-9abc-40d9ec67e384";
 
 		let comment_details = { commentId: uuidv4(), userId: req.user.id, goalId: goalId, comment: comment }
 		let newComment = new Object();
@@ -28,16 +30,10 @@ module.exports = app => {
 
 	// Why can't I get the goalId into this post request to do a WHERE goalID="blah"?
 	app.post('/api/get_comments', requireLogin, async (req, res) => {
-
-		console.log("request body: ", req.body.goalId);
-
-		// console.log("request goal:", req.goal);
-		// console.log("request body goal: ", req.body.goal)
 		db.con.query("SELECT * FROM comments WHERE goalId='"+req.body.goalId+"'", (err, rows) => {
 			if (err) {
 					console.log(err);
 			} else {
-				console.log("ROWS: ", rows);
 				res.send(rows);
 			}
 		})		

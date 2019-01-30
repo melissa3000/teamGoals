@@ -7,6 +7,7 @@ import Header from './Header';
 import Landing from './Landing';
 import Dashboard from './Dashboard';
 import GoalNew from './GoalNew';
+import GoalComments from './GoalComments';
 import TeamNew from './TeamNew';
 const Teams = () => <h2>Teams</h2>
 
@@ -25,6 +26,7 @@ class App extends Component {
 						<Route exact path="/" component={Landing} />
 						<Route exact path="/goals" component={Dashboard} />
 						<Route path="/goals/new" render={() => <GoalNew />} />
+						<Route path="/goals/comments" render={() => <GoalComments />} />
 						<Route exact path="/teams" component={Teams} />
 						<Route path="/teams/new" render={() => <TeamNew />} />
 					</div>
