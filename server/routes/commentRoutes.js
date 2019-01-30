@@ -3,7 +3,7 @@ const db = require('../dbconnection');
 const uuidv4 = require('uuid/v4');
 
 let comment = "Test comment";
-let goalId = "783aaf02-86e5-478e-9abc-40d9ec67e384";
+// let goalId = "783aaf02-86e5-478e-9abc-40d9ec67e384";
 
 
 module.exports = app => {
@@ -26,18 +26,18 @@ module.exports = app => {
 		res.send(newComment);
 	});
 
-	// Why can't I get the goalId into this get request to do a WHERE goalID="blah"?
-	app.get('/api/get_comments', requireLogin, async (req, res) => {
-		// console.log("req.user", req.user);
-		// console.log("req: ", req);
-		// console.log("request body: ", req.body);
+	// Why can't I get the goalId into this post request to do a WHERE goalID="blah"?
+	app.post('/api/get_comments', requireLogin, async (req, res) => {
+
+		console.log("request body: ", req.body.goalId);
+
 		// console.log("request goal:", req.goal);
 		// console.log("request body goal: ", req.body.goal)
-		db.con.query("SELECT * FROM comments", (err, rows) => {
+		db.con.query("SELECT * FROM comments WHERE goalId='"+req.body.goalId+"'", (err, rows) => {
 			if (err) {
 					console.log(err);
 			} else {
-				// console.log("ROWS: ", rows);
+				console.log("ROWS: ", rows);
 				res.send(rows);
 			}
 		})		

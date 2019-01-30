@@ -129,6 +129,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchGoals, fetchComments } from '../actions';
 import CommentList from './CommentList';
+import combineReducers from '../reducers';
 
 
 class GoalList extends Component {
@@ -147,28 +148,41 @@ class GoalList extends Component {
 		);
 	}
 
-	onClick(e) {
+	onClick(goalId) {
 		// console.log(this.props.goals);
-		this.props.goals.map(goal => {
-			console.log(goal.goalId);
-			// this.props.fetchComments(goal.goalId, () => {
-			// 	console.log("I fetched comments");
-			// });
-			this.props.fetchComments();
+		console.log("I clicked");
+		console.log("KEY: ", goalId);
 
+		// this.props.fetchComments(goalId, () => {
+		// 	console.log("I fetched comments");
+		// });
+		// this.props.fetchComments(goalId);
+		const data = { goalId: goalId}
+
+		fetch('/api/get_comments', {
+			method: 'POST',
+			headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json'
+      },
+			body: JSON.stringify(data)
 		})
+		.then(function(res) {
+			return res.json()
+		}).then(function(body) {
+			console.log(body);
+		});
 	}
 
 
 	renderGoals() {
-		const renderComments = this.renderComments();
+		// const renderComments = this.renderComments();
 		return this.props.goals.map(goal => {
 			return (
-				<div className="card darken-1" key={goal.goalId}>
+				<div className="card darken-1" key={goal.goalId} onClick={() => this.onClick(goal.goalId)}>
 					<div className="card-content">
-						<div onClick={this.onClick.bind(this)}>
+						<div>
 							{goal.goal}
-							{ renderComments }
 						</div>
 					</div>
 				</div>
@@ -190,5 +204,12 @@ function mapStateToProps( { goals, comments }) {
 	return { goals, comments};
 }
 
+// function mapStateToProps( { goals, comments }, ownProps) {
+// 	return { goals, comments: ownProps.goalId };
+// }
+
 export default connect(mapStateToProps, { fetchGoals, fetchComments })(GoalList);
 
+// export default ({ goalId }) (
+// 	connect(mapStateToProps, { fetchGoals, fetchComments })(GoalList)
+// );

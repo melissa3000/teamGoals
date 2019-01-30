@@ -50,13 +50,13 @@ class CommentList extends Component {
 	}
 
 	renderComments() {
-		console.log("These are the comments: ", this.props.comments);
-		console.log("Goal IDs: ", this.props.goals);
+		// console.log("These are the comments: ", this.props.comments);
+		// console.log("Goal IDs: ", this.props.goals);
 
 		return this.props.goals.map(goal => {
 			return this.props.comments.map(comment => {
 				if (goal.goalId === comment.goalId) {
-					console.log("They match!");
+					// console.log("They match!");
 					return (
 						<div className="card darken-1" key={comment.commentId}>
 							<div className="card-content">
