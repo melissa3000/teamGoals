@@ -2,36 +2,75 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchComments } from '../actions';
+import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
+
+import 'react-widgets/dist/css/react-widgets.css'
 
 
 class CommentList extends Component {
+	constructor() {
+		super();
+		this.state = {
+			comments: []
+		};
+	}
 	componentDidMount() {
 		this.props.fetchComments();
-	}
 
-	renderComments(goal) {
-		console.log("GOAL: ", goal);
-		if (goal) {
-		return (
-			<div className="card darken-1" key={goal.commentId}>
-				<div className="card-content">
-					<p>
-						{goal.comment}
-					</p>
+		const data = { goalId: this.props.goalId}
+
+		fetch('/api/get_comments', {
+			method: 'POST',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json'
+			},
+			body: JSON.stringify(data)
+		})
+		.then((res) => {
+			return res.json()
+		}).then((body => {
+			let comments = body.map((comment) => {
+				return(
+					<div key={comment.commentId}>
+					<p>{comment.comment}</p>
+					</div>
+				)
+			})
+			this.setState({comments: comments});
+			// console.log("state: ", this.state.comments)
+		}))
+	}
+	
+	renderComments() {
+		return(
+			<div className="container2">
+				<div className="container1">
+					{this.state.comments}
+				</div>
+				<br />
+			 	<div>
+					<Link to="/comments/new" className="waves-effect waves-light btn">Add a Comment
+					</Link>
 				</div>
 			</div>
-		);
-		}
+		)
 	}
+
 
 	render() {
 		return (
 			<div>
-				{this.renderComments()}
+				{ this.renderComments() }
 			</div>
 		);
 	}
 }
+
+CommentList.propTypes = {
+	goalId: PropTypes.string
+};
 
 function mapStateToProps( { comments }) {
 	return { comments };
@@ -43,49 +82,19 @@ export default connect(mapStateToProps, { fetchComments })(CommentList);
 
 
 
+
+
+
+
+
+
 //=========================================================================================
 // Stuff I tried along the way, will delete soon:
 //=========================================================================================
-// import React, { Component } from 'react';
-// import { connect } from 'react-redux';
-// import { fetchComments } from '../actions';
 
+// with Mihir's help (I think this is a better way, try to implement after 
+// getting brute force solution)
 
-// class CommentList extends Component {
-// 	componentDidMount() {
-// 		this.props.fetchComments();
-// 	}
-
-// 	renderComments() {
-// 		return this.props.comments.map(comment => {
-// 			return (
-// 				<div className="card darken-1" key={comment.commentId}>
-// 					<div className="card-content">
-// 						<p>
-// 							{comment.comment}
-// 						</p>
-// 					</div>
-// 				</div>
-// 			);
-// 		});
-// 	}
-
-// 	render() {
-// 		return (
-// 			<div>
-// 				{this.renderComments()}
-// 			</div>
-// 		);
-// 	}
-// }
-
-// function mapStateToProps( { comments }) {
-// 	return { comments };
-// }
-
-// export default connect(mapStateToProps, { fetchComments })(CommentList);
-
-//=========================================================================================
 
 // import React, { Component } from 'react';
 // import { connect } from 'react-redux';
@@ -102,10 +111,8 @@ export default connect(mapStateToProps, { fetchComments })(CommentList);
 // 	renderComments() {
 // 		// console.log("These are the comments: ", this.props.comments);
 // 		// console.log("Goal IDs: ", this.props.goals);
-
-// 		return this.props.goals.map(goal => {
-// 			return this.props.comments.map(comment => {
-// 				if (goal.goalId === comment.goalId) {
+// 		const data = this.props.comments.map(comment => {
+// 				if (this.props.goalId === comment.goalId) {
 // 					// console.log("They match!");
 // 					return (
 // 						<div className="card darken-1" key={comment.commentId}>
@@ -116,16 +123,17 @@ export default connect(mapStateToProps, { fetchComments })(CommentList);
 // 							</div>
 // 						</div>
 // 					);
-// 				} else {
-// 					return (
-// 						<div>
-// 						<Link to="/comments/new" className="waves-effect waves-light btn">Add a Comment
-// 						</Link>
-// 					</div>
-// 					)
 // 				}
-// 			}) 
-// 		});
+// 			}) || [];
+
+// 		data.push(
+// 			<div>
+// 			<Link to="/comments/new" className="waves-effect waves-light btn">Add a Comment
+// 			</Link>
+// 		</div>
+// 		);
+
+// 		return data;
 // 	}
 
 // 	render() {
@@ -142,5 +150,4 @@ export default connect(mapStateToProps, { fetchComments })(CommentList);
 // }
 
 // export default connect(mapStateToProps, { fetchComments, fetchGoals })(CommentList);
-
 
