@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { fetchGoals, fetchComments } from '../actions';
 import CommentList from './CommentList';
 import { Link } from 'react-router-dom';
-import CommentNew from './CommentNew';
+// import CommentNew from './CommentNew';
 
 
 class GoalList extends Component {
@@ -12,7 +12,6 @@ class GoalList extends Component {
 
 		this.onClick = this.onClick.bind(this);
 	}
-
 	renderComments(goalId) {
 		return (
 			<div>
@@ -20,39 +19,20 @@ class GoalList extends Component {
 				goalId = {goalId}
 			/>
 			<Link to={{
-				pathname: "/comments/new", 
-				state: {goalId: goalId}}} 
+				pathname:`/comments/new/${goalId}`,
+				state: {
+					goalId: goalId
+				}
+		}}
 				className="waves-effect waves-light btn">Add a Comment
 			</Link>
 			</div>
 		);
 	}
-	// renderComments(goalId) {
-	// 	return (
-	// 		<div>
-	// 		<CommentList 
-	// 			goalId = {goalId}
-	// 		/>
-	// 		<button onClick={() => this.renderNewGoal(goalId)}>New Comment</button>
-	// 		</div>
-	// 	);
-	// }
-
-	// renderNewGoal(goalId){
-	// 	console.log(" I clicked: ", goalId)
-	// 	return(
-	// 		<div>
-	// 			<CommentNew	
-	// 				goalId = { goalId }
-	// 			/>
-	// 		</div>
-	// 	)
-	// }
 
 	onClick(goalId) {
 		this.renderComments(goalId)
 	}
-
 
 	componentDidMount() {
 		this.props.fetchGoals();
