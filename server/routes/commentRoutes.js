@@ -2,10 +2,6 @@ const requireLogin = require('../middlewares/requireLogin');
 const db = require('../dbconnection');
 const uuidv4 = require('uuid/v4');
 
-let comment = "Doing great!";
-let goalId = "783aaf02-86e5-478e-9abc-40d9ec67e384";
-
-
 module.exports = app => {
 	app.post('/api/add_comment', requireLogin, async (req, res) => {
 
@@ -32,5 +28,6 @@ module.exports = app => {
 			}
 		})		
 	});
+	
 };
 

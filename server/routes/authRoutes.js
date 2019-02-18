@@ -1,4 +1,6 @@
 const passport = require('passport');
+const requireLogin = require('../middlewares/requireLogin');
+const db = require('../dbconnection');
 
 // exports function with routes so it can be used in index.js
 module.exports = (app) => {
@@ -39,4 +41,19 @@ module.exports = (app) => {
 	app.get('/api/current_user', (req, res) => {
 		res.send(req.user);
 	});
+
+	// update points when goal is complete
+	app.post('/api/update_points', requireLogin, async (req, res) => {
+		db.con.query("SELECT points FROM users WHERE id='"+req.user.id+"'", (err, rows) => {
+			if (err) {
+					console.log(err);
+			} else {
+				let current_points = Number(rows[0].points)
+				let new_points = req.body.points
+				let updated_points = current_points + new_points
+				db.con.query("UPDATE users SET points='"+updated_points+"'WHERE id='"+req.user.id+"'")
+				res.send(req.user);
+			}
+		}	
+	)});
 };

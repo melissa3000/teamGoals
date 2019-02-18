@@ -9,7 +9,7 @@ module.exports = app => {
 		let newUserGoal = new Object();
 		let teamInfo = req.body.teamName;
 		let goal_details
-		
+
 		if (teamInfo) {
 			goal_details= { goalId: uuidv4(), userId: req.user.id, goal: req.body.goal, TeamId: req.body.teamName.teamID, markedComplete: false }
 		} else {
@@ -30,6 +30,16 @@ module.exports = app => {
 	// only return goals that have not already been completed
 	app.get('/api/user_goals', (req, res) => {
 		db.con.query("SELECT * FROM goals WHERE userId='"+req.user.id+"' AND markedComplete=0", (err, rows) => {
+			if (err) {
+					console.log(err);
+			} else {
+				res.send(rows);
+			}
+		})		
+	});
+
+	app.post('/api/mark_complete', requireLogin, async (req, res) => {
+		db.con.query("UPDATE goals SET markedComplete=1 WHERE goalId='"+req.body.goalId+"'", (err, rows) => {
 			if (err) {
 					console.log(err);
 			} else {
