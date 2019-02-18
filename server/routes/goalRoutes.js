@@ -5,11 +5,20 @@ const uuidv4 = require('uuid/v4');
 
 module.exports = app => {
 	app.post('/api/add_goal', requireLogin, async (req, res) => {
-
-		let goal_details = { goalId: uuidv4(), userId: req.user.id, goal: req.body.goal, TeamId: req.body.teamName.teamID, markedComplete: false }
+		
 		let newUserGoal = new Object();
-		newUserGoal.goalId = goal_details.goalId
+		let teamInfo = req.body.teamName;
+		// console.log(teamId)
+		let goal_details
+		if (teamInfo) {
+			goal_details= { goalId: uuidv4(), userId: req.user.id, goal: req.body.goal, TeamId: req.body.teamName.teamID, markedComplete: false }
 
+		} else {
+			console.log("I got into the else")
+			goal_details= { goalId: uuidv4(), userId: req.user.id, goal: req.body.goal, markedComplete: false }
+
+		}
+		newUserGoal.goalId = goal_details.goalId
 		// console.log('goal_details: ', goal_details);
 		// console.log('newusergoal: ', newUserGoal);
 

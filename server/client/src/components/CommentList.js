@@ -51,8 +51,7 @@ class CommentList extends Component {
 				</div>
 				<br />
 			 	<div>
-					<Link to="/comments/new" className="waves-effect waves-light btn">Add a Comment
-					</Link>
+
 				</div>
 			</div>
 		)
