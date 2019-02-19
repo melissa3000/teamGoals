@@ -10,10 +10,11 @@ class GoalList extends Component {
 		this.state = {
 			auth: {
 				points: 0
-			}
+			},
+			showComments: false
 		};
 		console.log("state", this.state)
-		this.onClick = this.onClick.bind(this);
+		// this.onClick = this.onClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -23,26 +24,26 @@ class GoalList extends Component {
 	renderComments(goalId) {
 		return (
 			<div>
-				<CommentList 
-					goalId = {goalId}
-				/>
-				<Link to={{
-					pathname:`/comments/new/${goalId}`,
-					state: {
-						goalId: goalId }
-					}}
-					className="waves-effect waves-light btn">Add a Comment
-				</Link>
+			<CommentList 
+				goalId = {goalId}
+			/>
+			<Link to={{
+				pathname:`/comments/new/${goalId}`,
+				state: {
+					goalId: goalId }
+				}}
+				className="waves-effect waves-light btn">Add a Comment
+			</Link>
 			</div>
 		);
 	}
 
-	onClick(goalId) {
-		this.renderComments(goalId)
-	}
+	// onClick(goalId) {
+	// 	this.renderComments(goalId)
+	// }
 
 	markComplete(goalId) {
-		// console.log(goalId)
+		console.log(goalId)
 		const data = { goalId: goalId, markedComplete:1, points: 5}
 
 		fetch('/api/mark_complete', {
@@ -76,10 +77,11 @@ class GoalList extends Component {
 		})
 	}
 
+
 	renderGoals() {
 		return this.props.goals.map(goal => {
 			return (
-				<div className="card darken-1" key={goal.goalId} onClick={() => this.onClick(goal.goalId)}>
+				<div className="card darken-1" key={goal.goalId} onClick={() => this.setState(prevState => ({showComments: !prevState.showComments}))}>
 					<div className="card-content">
 						<div>
 							{goal.goal}			
@@ -89,7 +91,7 @@ class GoalList extends Component {
 								</button>
 						</div>
 						<div>
-							{this.renderComments(goal.goalId)}
+							{this.state.showComments && this.renderComments(goal.goalId)}
 						</div>
 					</div>
 				</div>
@@ -111,3 +113,4 @@ function mapStateToProps( { goals, comments, currentComment, auth }) {
 }
 
 export default connect(mapStateToProps, { fetchGoals, fetchComments })(GoalList);
+
