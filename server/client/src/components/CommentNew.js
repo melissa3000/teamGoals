@@ -4,28 +4,25 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import GoalField from './GoalField';
 import { createComment } from '../actions';
-// import { fetchGoals } from '../actions';
-// import PropTypes from 'prop-types';
 
 import 'react-widgets/dist/css/react-widgets.css'
 
 
 class CommentNew extends Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			goalId: ""
-		};
-	}
+	// constructor(props) {
+	// 	super(props);
+	// 	this.state = {
+	// 		goalId: ""
+	// 	};
+	// }
 	componentDidMount() {
 		let fullPath = window.location.pathname
 		let goalId = fullPath.split("/")[3]
-		// console.log("goalID: ", goalId)
+
 		this.setState({ goalId: goalId })
 	}
 	
 	renderFields() {
-		// console.log("goal outside: ", this.state.goalId)
 		return (
 			<div>
 				<div>
@@ -44,7 +41,6 @@ class CommentNew extends Component {
 
 	onSubmit(values) {
 		values["goalId"] = this.state.goalId
-		// console.log(values)
 		this.props.createComment(values, () => {
 			this.props.history.push('/goals');
 		});

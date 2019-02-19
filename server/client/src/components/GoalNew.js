@@ -41,7 +41,6 @@ class GoalNew extends Component {
 	}
 
 	onSubmit(values) {
-		console.log(values)
 		this.props.createGoal(values, () => {
 			this.props.history.push('/goals');
 		});

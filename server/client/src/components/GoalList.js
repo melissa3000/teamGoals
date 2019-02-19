@@ -5,9 +5,14 @@ import CommentList from './CommentList';
 import { Link } from 'react-router-dom';
 
 class GoalList extends Component {
-	constructor() {
-		super();
-
+	constructor(props) {
+		super(props);
+		this.state = {
+			auth: {
+				points: 0
+			}
+		};
+		console.log("state", this.state)
 		this.onClick = this.onClick.bind(this);
 	}
 
@@ -18,17 +23,16 @@ class GoalList extends Component {
 	renderComments(goalId) {
 		return (
 			<div>
-			<CommentList 
-				goalId = {goalId}
-			/>
-			<Link to={{
-				pathname:`/comments/new/${goalId}`,
-				state: {
-					goalId: goalId
-				}
-		}}
-				className="waves-effect waves-light btn">Add a Comment
-			</Link>
+				<CommentList 
+					goalId = {goalId}
+				/>
+				<Link to={{
+					pathname:`/comments/new/${goalId}`,
+					state: {
+						goalId: goalId }
+					}}
+					className="waves-effect waves-light btn">Add a Comment
+				</Link>
 			</div>
 		);
 	}
@@ -38,7 +42,7 @@ class GoalList extends Component {
 	}
 
 	markComplete(goalId) {
-		console.log(goalId)
+		// console.log(goalId)
 		const data = { goalId: goalId, markedComplete:1, points: 5}
 
 		fetch('/api/mark_complete', {
@@ -63,12 +67,14 @@ class GoalList extends Component {
 				return res.json();
 			})
 			.then((data => {
-				console.log(data)
-				this.setState({points: data.points})
+				// console.log(data)
+				let auth = {...this.state.auth}
+				auth.points = data.points
+				this.setState({auth})
+				console.log("newstate", this.state)
 			}))
 		})
 	}
-
 
 	renderGoals() {
 		return this.props.goals.map(goal => {
@@ -100,10 +106,8 @@ class GoalList extends Component {
 	}
 }
 
-function mapStateToProps( { goals, comments, currentComment }) {
-	return { goals, comments, currentComment};
+function mapStateToProps( { goals, comments, currentComment, auth }) {
+	return { goals, comments, currentComment, auth};
 }
 
 export default connect(mapStateToProps, { fetchGoals, fetchComments })(GoalList);
-
-

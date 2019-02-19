@@ -1,12 +1,9 @@
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchComments } from '../actions';
 import PropTypes from 'prop-types';
-// import { Link } from 'react-router-dom';
 
 import 'react-widgets/dist/css/react-widgets.css'
-
 
 class CommentList extends Component {
 	constructor() {
@@ -39,7 +36,6 @@ class CommentList extends Component {
 				)
 			})
 			this.setState({comments: comments});
-			// console.log("state: ", this.state.comments)
 		}))
 	}
 	
@@ -56,7 +52,6 @@ class CommentList extends Component {
 			</div>
 		)
 	}
-
 
 	render() {
 		return (
