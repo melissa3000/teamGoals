@@ -13,8 +13,6 @@ class GoalList extends Component {
 			},
 			showComments: false
 		};
-		// console.log("state", this.state)
-		// this.onClick = this.onClick.bind(this);
 	}
 
 	componentDidMount() {
@@ -39,12 +37,8 @@ class GoalList extends Component {
 		);
 	}
 
-	// onClick(goalId) {
-	// 	this.renderComments(goalId)
-	// }
-
 	markComplete(goalId) {
-		console.log(goalId)
+		// console.log(goalId)
 		const data = { goalId: goalId, markedComplete:1, points: 5}
 
 		fetch('/api/mark_complete', {
@@ -69,26 +63,21 @@ class GoalList extends Component {
 				return res.json();
 			})
 			.then((data => {
-				console.log("This is my data: ", data)
+				// console.log("This is my data: ", data)
 				let auth = {...this.state.auth}
 				auth.points = data.points
 				// debugger;
 				this.setState({auth})
 				this.props.updatePoints(data.points + 5)
-				// console.log("newstate", this.state)
 			}))
 		})
 	}
 
 
 	renderGoals() {
-		// console.log(this.state)
-
 		return this.props.goals.map(goal => {
 			return (
 				<div className="card darken-1" key={goal.goalId} onClick={() => this.setState(prevState => {
-					// console.log(prevState)
-					// console.log(prevState[`showComments_${goal.goalId}`])
 					return ({[`showComments_${goal.goalId
 					}`]: !prevState[`showComments_${goal.goalId}`]})
 				})}>

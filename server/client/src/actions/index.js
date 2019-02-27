@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_GOALS, CREATE_GOAL, CREATE_TEAM, FETCH_TEAMS, CREATE_COMMENT, FETCH_COMMENTS, JOIN_TEAM, UPDATE_POINTS } from './types';
+import { FETCH_USER, FETCH_GOALS, CREATE_GOAL, CREATE_TEAM, FETCH_TEAMS, CREATE_COMMENT, FETCH_COMMENTS, JOIN_TEAM, UPDATE_POINTS, FETCH_TEAM_GOALS } from './types';
 
 
 export const fetchUser = () => async dispatch => {
@@ -63,4 +63,10 @@ export const fetchComments = goalId => async dispatch => {
 export const updatePoints = value => dispatch => {
 	// debugger;
 	dispatch({ type: UPDATE_POINTS, payload: value})
+}
+
+export const fetchTeamGoals = teamId => async dispatch => {
+	const res = await axios.post('/api/get_team_goals', { teamId: teamId });
+
+	dispatch({ type: FETCH_TEAM_GOALS, payload:res.data})
 }

@@ -17,7 +17,7 @@ const Dashboard = () => {
 			<h3>Current Teams:</h3>
 			<TeamList />
 			<br />
-			<div>
+			<div style={{ marginBottom: "20px"}}>
 				<Link to="/teams/new" className="waves-effect waves-light btn">Make a new team
 				</Link>
 				<Link to="/teams/join" className="waves-effect waves-light btn right">Join a team

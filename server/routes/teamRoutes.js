@@ -22,7 +22,7 @@ module.exports = app => {
 		res.send(newTeam);
 	});
 
-		app.get('/api/user_teams', (req, res) => {
+	app.get('/api/user_teams', (req, res) => {
 		db.con.query("SELECT * FROM teams", (err, rows) => {
 			if (err) {
 					console.log(err);
@@ -31,6 +31,18 @@ module.exports = app => {
 			}
 		})		
 	});
+	
+	app.post('/api/get_team_goals', requireLogin, async (req, res) => {
+		db.con.query("SELECT * FROM goals WHERE teamId='"+req.body.teamId+"'", (err, rows) => {
+			if (err) {
+				console.log(err)
+			} else {
+				res.send(rows);
+			}
+		})
+	});
+
+
 
 	// join_team
 
