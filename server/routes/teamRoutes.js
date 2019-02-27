@@ -32,6 +32,8 @@ module.exports = app => {
 		})		
 	});
 
+	// join_team
+
 	// app.get('/api/user_teams', (req, res) => {
 	// 	db.con.query("SELECT * FROM teams WHERE userId='"+req.user.id+"'", (err, rows) => {
 	// 		if (err) {

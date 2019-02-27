@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchGoals, fetchComments } from '../actions';
+import { fetchGoals, fetchComments, updatePoints } from '../actions';
 import CommentList from './CommentList';
 import { Link } from 'react-router-dom';
 
@@ -13,7 +13,7 @@ class GoalList extends Component {
 			},
 			showComments: false
 		};
-		console.log("state", this.state)
+		// console.log("state", this.state)
 		// this.onClick = this.onClick.bind(this);
 	}
 
@@ -22,6 +22,7 @@ class GoalList extends Component {
 	}
 
 	renderComments(goalId) {
+		console.log(goalId)
 		return (
 			<div>
 			<CommentList 
@@ -68,30 +69,39 @@ class GoalList extends Component {
 				return res.json();
 			})
 			.then((data => {
-				// console.log(data)
+				console.log("This is my data: ", data)
 				let auth = {...this.state.auth}
 				auth.points = data.points
+				// debugger;
 				this.setState({auth})
-				console.log("newstate", this.state)
+				this.props.updatePoints(data.points + 5)
+				// console.log("newstate", this.state)
 			}))
 		})
 	}
 
 
 	renderGoals() {
+		// console.log(this.state)
+
 		return this.props.goals.map(goal => {
 			return (
-				<div className="card darken-1" key={goal.goalId} onClick={() => this.setState(prevState => ({showComments: !prevState.showComments}))}>
+				<div className="card darken-1" key={goal.goalId} onClick={() => this.setState(prevState => {
+					// console.log(prevState)
+					// console.log(prevState[`showComments_${goal.goalId}`])
+					return ({[`showComments_${goal.goalId
+					}`]: !prevState[`showComments_${goal.goalId}`]})
+				})}>
 					<div className="card-content">
 						<div>
 							{goal.goal}			
 								<button type="submit" className="teal btn-flat right white-text" onClick={() => this.markComplete(goal.goalId)}>
 								Mark goal complete
-								<i className="material-icons right">done</i>
+								<i className="material-icons right"></i>
 								</button>
 						</div>
 						<div>
-							{this.state.showComments && this.renderComments(goal.goalId)}
+							{this.state[`showComments_${goal.goalId}`] && this.renderComments(goal.goalId)}
 						</div>
 					</div>
 				</div>
@@ -112,5 +122,9 @@ function mapStateToProps( { goals, comments, currentComment, auth }) {
 	return { goals, comments, currentComment, auth};
 }
 
-export default connect(mapStateToProps, { fetchGoals, fetchComments })(GoalList);
+const mapDispatchToProps = {
+	updatePoints, fetchGoals, fetchComments
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(GoalList);
 

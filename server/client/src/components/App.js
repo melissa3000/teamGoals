@@ -9,6 +9,7 @@ import Dashboard from './Dashboard';
 import GoalNew from './GoalNew';
 import TeamNew from './TeamNew';
 import CommentNew from './CommentNew';
+import TeamJoin from './TeamJoin';
 const Teams = () => <h2>Teams</h2>
 
 
@@ -29,6 +30,7 @@ class App extends Component {
 						<Route path="/comments/new" render={() => <CommentNew />} />
 						<Route exact path="/teams" component={Teams} />
 						<Route path="/teams/new" render={() => <TeamNew />} />
+						<Route path="/teams/join" render={() => <TeamJoin />} />
 					</div>
 				</BrowserRouter>
 			</div>

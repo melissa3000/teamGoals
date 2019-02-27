@@ -20,6 +20,8 @@ const Dashboard = () => {
 			<div>
 				<Link to="/teams/new" className="waves-effect waves-light btn">Make a new team
 				</Link>
+				<Link to="/teams/join" className="waves-effect waves-light btn right">Join a team
+				</Link>
 			</div>
 		</div>		
 	);

@@ -5,3 +5,5 @@ export const CREATE_TEAM = 'create_team';
 export const FETCH_TEAMS = 'fetch_teams';
 export const CREATE_COMMENT = 'create_comment';
 export const FETCH_COMMENTS = 'fetch_comments'; 
+export const JOIN_TEAM = 'join_team' 
+export const UPDATE_POINTS = 'update_points'

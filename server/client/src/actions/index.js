@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { FETCH_USER, FETCH_GOALS, CREATE_GOAL, CREATE_TEAM, FETCH_TEAMS, CREATE_COMMENT, FETCH_COMMENTS } from './types';
+import { FETCH_USER, FETCH_GOALS, CREATE_GOAL, CREATE_TEAM, FETCH_TEAMS, CREATE_COMMENT, FETCH_COMMENTS, JOIN_TEAM, UPDATE_POINTS } from './types';
 
 
 export const fetchUser = () => async dispatch => {
@@ -21,6 +21,7 @@ export const createGoal = values => async dispatch => {
 	const res = await axios.post('/api/add_goal', values);
 
 	dispatch({ type: CREATE_GOAL, payload: res.data });
+	return res;
 };
 
 export const fetchGoals = () => async dispatch => {
@@ -41,6 +42,12 @@ export const fetchTeams = () => async dispatch => {
 	dispatch({ type: FETCH_TEAMS, payload: res.data });
 };
 
+export const joinTeam = values => async dispatch => {
+	const res = await axios.post('/api/join_team', values);
+
+	dispatch({ type: JOIN_TEAM, payload: res.data });
+};
+
 export const createComment = values => async dispatch => {
 	const res = await axios.post('/api/add_comment', values);
 
@@ -52,3 +59,8 @@ export const fetchComments = goalId => async dispatch => {
 
 	dispatch({ type: FETCH_COMMENTS, payload: res.data });
 };
+
+export const updatePoints = value => dispatch => {
+	// debugger;
+	dispatch({ type: UPDATE_POINTS, payload: value})
+}

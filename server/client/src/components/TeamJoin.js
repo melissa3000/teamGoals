@@ -3,40 +3,30 @@ import { reduxForm, Field } from 'redux-form';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import GoalField from './GoalField';
-import { createTeam } from '../actions';
+import { joinTeam } from '../actions';
 
 
 import 'react-widgets/dist/css/react-widgets.css'
 
 
-class TeamNew extends Component {
+class TeamJoin extends Component {
 	renderFields() {
 		return (
 			<div>
 				<div>
 					<Field 
-						label="Team Name" 
+						label="Enter the Team Passcode to Join A Friend's Team" 
 						type="text"
-						name="teamName" 
+						name="teamInviteToken" 
 						component={GoalField} 
 					/>
-				</div>
-				<div style={{ marginBottom: "20px"}}>
-					<div>
-						<Field 
-							label="Set a codeword or phrase for friends to be able to join your team" 
-							type="text"
-							name="teamInviteToken" 
-							component={GoalField} 
-						/>
-				</div>
 				</div>
 			</div>
 		);
 	}
 
 	onSubmit(values) {
-		this.props.createTeam(values, () => {
+		this.props.joinTeam(values, () => {
 			this.props.history.push('/goals');
 		});
 	}
@@ -61,8 +51,8 @@ class TeamNew extends Component {
 function validate(values) {
 	const errors = {};
 
-	if (!values.teamName) {
-		errors.teamName = "Please enter a team name to get started";
+	if (!values.teamInviteToken) {
+		errors.teamInviteToken = "Please enter a team passcode to join a team";
 	}
 	return errors;
 }
@@ -70,7 +60,7 @@ function validate(values) {
 
 export default reduxForm({
 	validate,
-	form: 'teamForm'
+	form: 'joinTeam'
 }) (
-	connect(null, { createTeam }) (TeamNew)
+	connect(null, { joinTeam }) (TeamJoin)
 );
