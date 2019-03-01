@@ -9,12 +9,6 @@ import 'react-widgets/dist/css/react-widgets.css'
 
 
 class CommentNew extends Component {
-	// constructor(props) {
-	// 	super(props);
-	// 	this.state = {
-	// 		goalId: ""
-	// 	};
-	// }
 	componentDidMount() {
 		let fullPath = window.location.pathname
 		let goalId = fullPath.split("/")[3]
@@ -71,10 +65,6 @@ function validate(values) {
 	}
 	return errors;
 }
-
-// function mapStateToProps( { goals }) {
-// 	return { goals };
-// }
 
 export default reduxForm({
 	validate,

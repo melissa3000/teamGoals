@@ -16,7 +16,7 @@ class GoalNew extends Component {
 	}
 	
 	renderFields() {
-		let teams = this.props.teams;
+		let teams = this.props.teams.teams;
 		return (
 			<div>
 				<div>
@@ -46,6 +46,7 @@ class GoalNew extends Component {
 	}
 
 	render() {
+
 		const { handleSubmit } = this.props;
 		return (
 			<form onSubmit={handleSubmit(this.onSubmit.bind(this))}>

@@ -38,7 +38,6 @@ class GoalList extends Component {
 	}
 
 	markComplete(goalId) {
-		// console.log(goalId)
 		const data = { goalId: goalId, markedComplete:1, points: 5}
 
 		fetch('/api/mark_complete', {
@@ -63,7 +62,6 @@ class GoalList extends Component {
 				return res.json();
 			})
 			.then((data => {
-				// console.log("This is my data: ", data)
 				let auth = {...this.state.auth}
 				auth.points = data.points
 				// debugger;

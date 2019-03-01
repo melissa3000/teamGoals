@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import GoalField from './GoalField';
 import { createTeam } from '../actions';
@@ -35,10 +35,9 @@ class TeamNew extends Component {
 		);
 	}
 
-	onSubmit(values) {
-		this.props.createTeam(values, () => {
-			this.props.history.push('/goals');
-		});
+	async onSubmit(values) {
+		await this.props.createTeam(values);
+		this.props.history.push('/goals');
 	}
 	
 	render() {
@@ -72,5 +71,5 @@ export default reduxForm({
 	validate,
 	form: 'teamForm'
 }) (
-	connect(null, { createTeam }) (TeamNew)
+	connect(null, { createTeam }) (withRouter(TeamNew))
 );

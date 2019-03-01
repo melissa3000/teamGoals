@@ -8,15 +8,6 @@ export const fetchUser = () => async dispatch => {
 	dispatch({ type: FETCH_USER, payload: res.data })
 };
 
-// action creator before refactor, does the same as the code immediately above
-// export const fetchUser = () => {
-// 	return function(dispatch) {
-// 		axios.get('/api/current_user')
-// 			.then(res => dispatch({ type: FETCH_USER, payload: res }))
-// 	};
-// };
-
-
 export const createGoal = values => async dispatch => {
 	const res = await axios.post('/api/add_goal', values);
 
