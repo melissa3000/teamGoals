@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { reduxForm, Field } from 'redux-form';
-import { Link } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import GoalField from './GoalField';
 import { createComment } from '../actions';
@@ -33,11 +33,10 @@ class CommentNew extends Component {
 		);
 	}
 
-	onSubmit(values) {
+	async onSubmit(values) {
 		values["goalId"] = this.state.goalId
-		this.props.createComment(values, () => {
-			this.props.history.push('/goals');
-		});
+		await this.props.createComment(values);
+		this.props.history.push('/goals');
 	}
 
 	render() {
@@ -70,7 +69,7 @@ export default reduxForm({
 	validate,
 	form: 'commentForm'
 }) (
-	connect(null, { createComment}) (CommentNew)
+	connect(null, { createComment}) (withRouter(CommentNew))
 );
 
 

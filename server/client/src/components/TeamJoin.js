@@ -25,10 +25,9 @@ class TeamJoin extends Component {
 		);
 	}
 
-	onSubmit(values) {
-		this.props.joinTeam(values, () => {
-			this.props.history.push('/goals');
-		});
+	async onSubmit(values) {
+		await this.props.joinTeam(values);
+		this.props.history.push('/goals');
 	}
 	
 	render() {
