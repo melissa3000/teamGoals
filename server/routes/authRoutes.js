@@ -23,11 +23,13 @@ module.exports = (app) => {
 		},
 		// if google sends token error, redirect to the login page
 		(err, req, res, next) => {
-			console.log('This is the error: ', err);
-			console.log('This is the error name: ', err.name);
-			if (err.name === 'TokenError') {
-				res.redirect('/auth/google');
-			} 
+			if (err) {
+				console.error('This is the error: ', err);
+				console.error('This is the error name: ', err.name);
+				if (err.name === 'TokenError') {
+					res.redirect('/auth/google');
+				} 
+			}
 		}
 	);
 	
@@ -46,7 +48,7 @@ module.exports = (app) => {
 	app.post('/api/update_points', requireLogin, async (req, res) => {
 		db.con.query("SELECT points FROM users WHERE id='"+req.user.id+"'", (err, rows) => {
 			if (err) {
-					console.log(err);
+				console.error(err);
 			} else {
 				let current_points = Number(rows[0].points)
 				let new_points = req.body.points

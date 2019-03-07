@@ -1,22 +1,24 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
+import { isEmpty } from 'lodash';
 
 class Header extends Component {
 	renderContent() {
-		switch (this.props.auth) {
-			case null:
-				return;
-			case false:
-				return <li><a href="/auth/google">Login with Google</a></li>;
-			default:
-				return [
-					<li key="1" style={{ margin: '0 10px' }}>
-						Points: {this.props.auth.points}
-					</li>,
-					<li key="2"><a href="/api/logout">Logout</a></li>
-				];
+		const { auth } = this.props;
+
+		console.log(isEmpty(this.props.auth));
+		if (auth === null) return;
+		if (isEmpty(this.props.auth)) {
+			return <li><a href="/auth/google">Login with Google</a></li>;
 		}
+		
+		return [
+			<li key="1" style={{ margin: '0 10px' }}>
+				Points: {this.props.auth.points}
+			</li>,
+			<li key="2"><a href="/api/logout">Logout</a></li>
+		];
 	}
 
 	render() {
@@ -24,7 +26,7 @@ class Header extends Component {
 			<nav>
 				<div className="nav-wrapper teal lighten-2">
 					<Link 
-					to={this.props.auth ? '/goals' : '/' } 
+					to={isEmpty(this.props.auth) ? '/' : '/goals' } 
 					className="left brand-logo"
 					>
 						Team Goals

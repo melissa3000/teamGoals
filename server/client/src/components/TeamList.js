@@ -70,7 +70,7 @@ class TeamList extends Component {
 }
 
 function mapStateToProps( { teams }) {
-	console.log(teams);
+	// console.log(teams);
 	return { teams: teams.teams, teamGoals: teams.teamGoals };
 }
 
